@@ -12,6 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
+      - name: create firebase config
+        run: |
+            echo $FIREBASE_CONFIG >> build/firebase.config.json
+        shell: bash
+        env:
+          FIREBASE_CONFIG : ${{secrets.FIREBASE_CONFIG}}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { CircularProgress } from '@mui/material';
+import { User } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import "./App.scss";
+import { whoami } from './services/Auth';
+import { firebaseInit } from './services/Firebase';
 
 function App() {
+
+  const [user, setUser] = useState<User | null>();
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      await firebaseInit();
+      setLoading(false);
+      const me = await whoami();
+      if (!!me) {
+        setUser(me);
+      } else {
+        navigate("/login");
+      }
+    }
+
+    init().catch(err => console.log(err))
+  }, [loading, user, navigate])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    (loading ? <CircularProgress className='loader' size="20vh" /> :
+      <Outlet />
+    )
   );
 }
 

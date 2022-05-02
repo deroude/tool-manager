@@ -1,0 +1,16 @@
+.login-card {
+    width: 50%;
+    min-width: 20rem;
+    max-width: 50rem;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:15vh;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        .login-field {
+            margin-top: 2rem;
+        }
+    }
+}

@@ -3,7 +3,17 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /tools/{id} {
       allow write: if (request.auth.uid == request.resource.data.assignedUser
-      	&& request.resource.data.diff(resource.data).affectedKeys().hasOnly(['assignedUser']));
+      	&& request.resource.data.diff(resource.data).affectedKeys().hasOnly(['assignedUser','assignedUserName','assignedAreaId','assignedAreaName']));
+      allow read: if true;
+    }
+
+    match /workAreas/{id} {
+      allow write: if false;
+      allow read: if true;
+    }
+
+    match /users/{id} {
+      allow write: if false;
       allow read: if true;
     }
   }

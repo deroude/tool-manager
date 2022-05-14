@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/login/Login';
 import Home from './pages/home/Home';
 import Grab from './pages/grab/Grab';
+import Inventory from './pages/inventory/Inventory';
 
 
 const root = createRoot(document.getElementById("root")!);
@@ -18,6 +19,7 @@ root.render(
         <Route path="home" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="grab/:toolId" element={<Grab />} />
+        <Route path="/inventory" element={<Inventory />} />
       </Route>
     </Routes>
   </BrowserRouter>
